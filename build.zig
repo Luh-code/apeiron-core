@@ -6,8 +6,8 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const fw = b.addModule("apeiron-framework", .{
-        .root_source_file = b.path("src/frame.zig"),
+    const core = b.addModule("apeiron-core", .{
+        .root_source_file = b.path("src/core.zig"),
         .target = target,
         .optimize = optimize,
     });
@@ -36,8 +36,8 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    fw.addImport("apeiron-logger", apeiron_logger_dep.module("apeiron-logger"));
-    exe.root_module.addImport("apeiron-framework", fw);
+    core.addImport("apeiron-logger", apeiron_logger_dep.module("apeiron-logger"));
+    exe.root_module.addImport("apeiron-framework", core);
     exe.linkLibC();
     exe.root_module.addImport("apeiron-logger", apeiron_logger_dep.module("apeiron-logger"));
 
